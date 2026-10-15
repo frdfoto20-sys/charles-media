@@ -70,6 +70,10 @@ async function loadArticles() {
 
   try {
     const res = await fetch(`https://api.github.com/repos/${REPO}/contents/articles?ref=${BRANCH}`);
+    if (res.status === 404) {
+      if (loading) loading.textContent = 'Aucun article publié pour le moment.';
+      return;
+    }
     if (!res.ok) throw new Error('GitHub API error');
     const files = await res.json();
 
