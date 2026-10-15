@@ -1,3 +1,9 @@
+[build]
+  publish = "."
+  # Ne pas remettre le site à jour quand seuls les articles changent :
+  # la page d'accueil les lit directement sur GitHub.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)articles'"
+
 [[headers]]
   for = "/*"
   [headers.values]

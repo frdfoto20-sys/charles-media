@@ -2,6 +2,14 @@
 const REPO = 'frdfoto20-sys/charles-media';
 const BRANCH = 'main';
 
+// Les images envoyées depuis l'admin sont lues directement sur GitHub
+function imgUrl(src) {
+  if (!src) return '';
+  if (/^https?:\/\//.test(src)) return src;
+  const name = src.split('/').pop();
+  return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/images/${name}`;
+}
+
 const CATEGORY_IMAGES = {
   'Économie':    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80',
   'Nature':      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80',
@@ -46,7 +54,7 @@ function formatDate(dateStr) {
 
 function buildCard(meta, slug) {
   const tag = CATEGORY_TAGS[meta.category] || 'other';
-  const img = meta.cover || CATEGORY_IMAGES[meta.category] || CATEGORY_IMAGES['Culture'];
+  const img = imgUrl(meta.cover) || CATEGORY_IMAGES[meta.category] || CATEGORY_IMAGES['Culture'];
   const readtime = meta.readtime ? `· ${meta.readtime} min` : '';
   return `
     <article class="article-card" data-tag="${tag}">
@@ -101,7 +109,7 @@ async function loadArticles() {
     const featuredSection = document.getElementById('featured-section');
     const featuredCard = document.getElementById('featured-card');
     if (featured && featuredSection && featuredCard) {
-      const fImg = featured.meta.cover || CATEGORY_IMAGES[featured.meta.category] || CATEGORY_IMAGES['Culture'];
+      const fImg = imgUrl(featured.meta.cover) || CATEGORY_IMAGES[featured.meta.category] || CATEGORY_IMAGES['Culture'];
       const fReadtime = featured.meta.readtime ? `· ${featured.meta.readtime} min de lecture` : '';
       featuredCard.innerHTML = `
         <img class="featured-img" src="${fImg}" alt="${featured.meta.title || ''}">

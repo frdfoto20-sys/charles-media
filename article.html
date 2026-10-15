@@ -67,9 +67,19 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>
 const REPO = 'frdfoto20-sys/charles-media';
 const BRANCH = 'main';
+
+// Les images envoyées depuis l'admin sont lues directement sur GitHub
+function imgUrl(src) {
+  if (!src) return '';
+  if (/^https?:\/\//.test(src)) return src;
+  const name = src.split('/').pop();
+  return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/images/${name}`;
+}
+
 
 function parseFrontmatter(text) {
   const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -109,6 +119,13 @@ function buildDebate(meta) {
   return html ? `<div class="debate-section"><h3>💬 Questions de débat</h3>${html}</div>` : '';
 }
 
+function renderBody(md) {
+  if (!window.marked) return md;
+  const html = marked.parse(md);
+  // Images insérées dans le texte : les lire aussi sur GitHub
+  return html.replace(/<img src="(?!https?:)([^"]+)"/g, (m, src) => `<img src="${imgUrl(src)}"`);
+}
+
 async function loadArticle() {
   const container = document.getElementById('article-content');
   // Récupère le slug depuis l'URL : /articles/mon-article.html
@@ -127,7 +144,7 @@ async function loadArticle() {
 
     document.title = `${meta.title || 'Article'} — Charles.média`;
 
-    const cover = meta.cover ? `<img class="cover-img" src="${meta.cover}" alt="${meta.title}">` : '';
+    const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="${meta.title}">` : '';
     const readtime = meta.readtime ? `· ${meta.readtime} min de lecture` : '';
 
     container.innerHTML = `
@@ -140,7 +157,7 @@ async function loadArticle() {
         <span>${readtime}</span>
       </div>
       ${cover}
-      <div class="article-body">${body}</div>
+      <div class="article-body">${renderBody(body)}</div>
       ${buildDebate(meta)}
     `;
   } catch(e) {
