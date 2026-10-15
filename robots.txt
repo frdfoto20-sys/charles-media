@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /.git/
+
+Sitemap: https://charles.media/sitemap.xml

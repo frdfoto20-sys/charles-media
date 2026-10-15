@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charles.média</title>
+  <meta name="description" content="Comprendre le monde, sans filtres. Économie, nature, politique, science — des analyses claires sur les sujets qui méritent qu'on s'y arrête.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="container">
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <span class="logo-charles">Charles</span>
+        <span class="logo-media">Média</span>
+      </a>
+      <div class="nav-links">
+        <a href="themes.html">Thèmes</a>
+        <a href="debats.html">Débats</a>
+        <a href="a-propos.html">À propos</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="container">
+
+    <div class="eyebrow">À la une</div>
+
+    <a href="articles/pourquoi-linflation-persiste.html" style="display:block">
+      <div class="featured">
+        <div class="featured-img placeholder" id="featured-img">
+          <img src="articles/images/inflation-cover.jpg" alt="Inflation et taux d'intérêt"
+               onerror="this.style.display='none'">
+        </div>
+        <div>
+          <div class="article-cat">Économie</div>
+          <div class="featured-title">Pourquoi l'inflation persiste même quand les taux montent ?</div>
+          <div class="featured-desc">Une exploration des mécanismes qui font que la politique monétaire ne suffit pas toujours à calmer les prix. Offre, demande, boucle prix-salaires — on décortique.</div>
+          <div class="meta">
+            <span>8 min de lecture</span>
+            <span>·</span>
+            <span>12 septembre 2026</span>
+            <span>·</span>
+            <span>14 commentaires</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <div class="tag-bar">
+      <button class="tag active" onclick="setTag(this)">Tout</button>
+      <button class="tag" onclick="setTag(this)">Économie</button>
+      <button class="tag" onclick="setTag(this)">Nature</button>
+      <button class="tag" onclick="setTag(this)">Politique</button>
+      <button class="tag" onclick="setTag(this)">Technologie</button>
+      <button class="tag" onclick="setTag(this)">Société</button>
+    </div>
+
+    <div class="grid">
+
+      <div class="article-card">
+        <a href="articles/forets-primaires.html">
+          <div class="article-cat">Nature</div>
+          <div class="article-card-title">Les forêts primaires, dernier rempart contre le dérèglement climatique</div>
+          <div class="meta">6 min · 9 commentaires</div>
+        </a>
+      </div>
+
+      <div class="article-card">
+        <a href="articles/populisme.html">
+          <div class="article-cat">Politique</div>
+          <div class="article-card-title">Le populisme : phénomène de surface ou symptôme profond ?</div>
+          <div class="meta">11 min · 21 commentaires</div>
+        </a>
+      </div>
+
+      <div class="article-card">
+        <a href="articles/ia-et-travail.html">
+          <div class="article-cat">Technologie</div>
+          <div class="article-card-title">L'IA change-t-elle vraiment le travail, ou juste son apparence ?</div>
+          <div class="meta">7 min · 5 commentaires</div>
+        </a>
+      </div>
+
+      <div class="article-card">
+        <a href="articles/dette-publique.html">
+          <div class="article-cat">Économie</div>
+          <div class="article-card-title">Comprendre la dette publique sans panique ni dogme</div>
+          <div class="meta">9 min · 3 commentaires</div>
+        </a>
+      </div>
+
+      <div class="article-card">
+        <a href="articles/revenu-universel.html">
+          <div class="article-cat">Société</div>
+          <div class="article-card-title">Le revenu universel : utopie ou solution inévitable ?</div>
+          <div class="meta">10 min · 17 commentaires</div>
+        </a>
+      </div>
+
+      <div class="article-card">
+        <a href="articles/recifs-coralliens.html">
+          <div class="article-cat">Nature</div>
+          <div class="article-card-title">Pourquoi les récifs coralliens meurent — et ce qu'on peut encore faire</div>
+          <div class="meta">5 min · 8 commentaires</div>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="container">
+    <div class="footer-logo">
+      <div class="footer-charles">Charles</div>
+      <div class="footer-media">Média</div>
+    </div>
+    <div class="footer-copy">Comprendre le monde, sans filtres. &nbsp;·&nbsp; <a href="mentions-legales.html" style="color:var(--muted)">Mentions légales</a></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
