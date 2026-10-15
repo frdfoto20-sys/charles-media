@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article — Charles.média</title>
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .article-full { max-width: 740px; margin: 3rem auto; padding: 0 1.5rem 4rem; }
+    .article-full .category-tag { margin-bottom: 1rem; display: inline-block; }
+    .article-full h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
+    .article-full .article-meta { color: var(--secondary); font-size: .85rem; margin-bottom: 2rem; }
+    .article-full .cover-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; max-height: 420px; object-fit: cover; }
+    .article-body { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.85; color: #333; }
+    .article-body h2, .article-body h3 { font-family: var(--font-display); color: var(--navy); margin: 2rem 0 .75rem; }
+    .article-body p { margin-bottom: 1.25rem; }
+    .article-body a { color: var(--bordeaux); }
+    .debate-section { background: var(--nude-card); border-radius: 12px; padding: 1.5rem 2rem; margin: 3rem 0; }
+    .debate-section h3 { font-family: var(--font-display); color: var(--navy); font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .debate-question { margin-bottom: 1.5rem; }
+    .debate-question p { font-weight: 600; color: var(--navy); margin-bottom: .75rem; }
+    .debate-options { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .debate-btn { background: white; border: 1.5px solid var(--bordeaux); color: var(--bordeaux); padding: .4rem 1rem; border-radius: 20px; cursor: pointer; font-size: .9rem; transition: all .2s; }
+    .debate-btn:hover, .debate-btn.selected { background: var(--bordeaux); color: white; }
+    .back-link { display: inline-flex; align-items: center; gap: .5rem; color: var(--secondary); font-size: .9rem; margin: 2rem 0 0; text-decoration: none; }
+    .back-link:hover { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
+      <span class="logo-charles">Charles</span>
+      <span class="logo-media">Média</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/">Accueil</a>
+      <a href="/#articles">Articles</a>
+      <a href="/mentions-legales.html">Mentions légales</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-full" id="article-content">
+  <p style="color:var(--secondary);font-family:var(--font-body);padding:2rem 0;">Chargement de l'article…</p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo-charles">Charles</div>
+    <div class="footer-logo-media">Média</div>
+    <p class="footer-tagline">Réflexions personnelles sur le monde</p>
+    <div class="footer-links">
+      <a href="/">Accueil</a>
+      <a href="/#articles">Articles</a>
+      <a href="/mentions-legales.html">Mentions légales</a>
+    </div>
+    <p class="footer-disclaimer">
+      Ce site est un espace d'expression personnelle. Son auteur n'est pas journaliste professionnel
+      et ne prétend pas à ce titre. Les contenus publiés reflètent des recherches et opinions personnelles.
+    </p>
+    <p style="color:rgba(255,255,255,.3);font-size:.7rem;">© 2026 Charles.média — Hébergé sur Netlify</p>
+  </div>
+</footer>
+
+<script>
+const REPO = 'frdfoto20-sys/charles-media';
+const BRANCH = 'main';
+
+function parseFrontmatter(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!match) return { meta: {}, body: text };
+  const fm = {};
+  match[1].split('\n').forEach(line => {
+    const idx = line.indexOf(':');
+    if (idx === -1) return;
+    const key = line.slice(0, idx).trim();
+    const val = line.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
+    fm[key] = val;
+  });
+  return { meta: fm, body: match[2] };
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch(e) { return dateStr; }
+}
+
+function buildDebate(meta) {
+  let html = '';
+  ['debate1', 'debate2'].forEach((key, i) => {
+    const q = meta[`${key}_question`] || meta[`${key}.question`];
+    const opts = (meta[`${key}_options`] || meta[`${key}.options`] || 'Oui;Non;Ça dépend').split(';');
+    if (!q) return;
+    html += `<div class="debate-question">
+      <p>${q}</p>
+      <div class="debate-options">
+        ${opts.map(o => `<button class="debate-btn" onclick="this.classList.toggle('selected')">${o.trim()}</button>`).join('')}
+      </div>
+    </div>`;
+  });
+  return html ? `<div class="debate-section"><h3>💬 Questions de débat</h3>${html}</div>` : '';
+}
+
+async function loadArticle() {
+  const container = document.getElementById('article-content');
+  // Récupère le slug depuis l'URL : /articles/mon-article.html
+  const path = window.location.pathname; // ex: /articles/mon-article.html
+  const slug = path.split('/').pop();
+  if (!slug || slug === 'article.html') {
+    container.innerHTML = '<p>Article introuvable.</p>';
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/${slug}`);
+    if (!res.ok) throw new Error('Article non trouvé');
+    const text = await res.text();
+    const { meta, body } = parseFrontmatter(text);
+
+    document.title = `${meta.title || 'Article'} — Charles.média`;
+
+    const cover = meta.cover ? `<img class="cover-img" src="${meta.cover}" alt="${meta.title}">` : '';
+    const readtime = meta.readtime ? `· ${meta.readtime} min de lecture` : '';
+
+    container.innerHTML = `
+      <a href="/" class="back-link">← Retour aux articles</a>
+      <br><br>
+      <span class="category-tag">${meta.category || ''}</span>
+      <h1>${meta.title || 'Sans titre'}</h1>
+      <div class="article-meta">
+        <span>${formatDate(meta.date)}</span>
+        <span>${readtime}</span>
+      </div>
+      ${cover}
+      <div class="article-body">${body}</div>
+      ${buildDebate(meta)}
+    `;
+  } catch(e) {
+    container.innerHTML = '<p>Impossible de charger cet article.</p>';
+    console.error(e);
+  }
+}
+
+loadArticle();
+</script>
+</body>
+</html>
