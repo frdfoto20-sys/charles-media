@@ -22,6 +22,7 @@ collections:
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Date",        name: "date",        widget: "datetime", format: "DD MMMM YYYY" }
       - { label: "Durée de lecture (min)", name: "readtime", widget: "number", default: 5 }
+      - { label: "Mettre à la une", name: "featured", widget: "boolean", default: false, required: false, hint: "Coche pour afficher cet article en haut de la page d'accueil" }
       - { label: "Image de couverture", name: "cover", widget: "image", required: false }
       - { label: "Corps de l'article",  name: "body",  widget: "markdown" }
       - label: "Question de débat 1"

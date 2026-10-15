@@ -96,8 +96,8 @@ async function loadArticles() {
 
     if (loading) loading.remove();
 
-    // Article à la une = le plus récent
-    const featured = articles[0];
+    // Article à la une = le plus récent coché "Mettre à la une", sinon le plus récent
+    const featured = articles.find(a => a.meta.featured === 'true') || articles[0];
     const featuredSection = document.getElementById('featured-section');
     const featuredCard = document.getElementById('featured-card');
     if (featured && featuredSection && featuredCard) {
@@ -119,7 +119,7 @@ async function loadArticles() {
     }
 
     // Les autres articles dans la grille
-    articles.slice(1).forEach(({ meta, slug }) => {
+    articles.filter(a => a !== featured).forEach(({ meta, slug }) => {
       grid.insertAdjacentHTML('beforeend', buildCard(meta, slug));
     });
 
