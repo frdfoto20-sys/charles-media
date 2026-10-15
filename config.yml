@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: TON-USERNAME/charles-media
+  repo: frdfoto20-sys/charles-media
   branch: main
 
 media_folder: "articles/images"
