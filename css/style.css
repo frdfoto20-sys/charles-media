@@ -73,26 +73,30 @@ p { margin-bottom: 1rem; }
 .site-logo {
   display: flex;
   flex-direction: column;
+  align-items: center;
   line-height: 1;
   text-decoration: none;
 }
 
 .logo-charles {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.6rem;
-  color: var(--navy);
-  letter-spacing: .05em;
+  color: #0B3157;
+  letter-spacing: .01em;
   text-transform: uppercase;
 }
 
 .logo-media {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 400;
-  font-style: italic;
-  font-size: .85rem;
-  color: var(--rouille);
-  letter-spacing: .12em;
+  font-style: normal;
+  font-size: .62rem;
+  color: #0B3157;
+  letter-spacing: .55em;
+  margin-right: -.55em;
+  text-transform: uppercase;
+  margin-top: .3rem;
 }
 
 .site-nav { display: flex; gap: 1.5rem; align-items: center; }
@@ -491,10 +495,13 @@ p { margin-bottom: 1rem; }
 
 .footer-logo-media {
   font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-size: .8rem;
-  color: var(--rouille);
-  letter-spacing: .12em;
+  font-style: normal;
+  font-size: .55rem;
+  color: white;
+  letter-spacing: .55em;
+  margin-right: -.55em;
+  text-transform: uppercase;
+  margin-top: .3rem;
 }
 
 .footer-tagline { margin: .5rem 0 1.5rem; color: rgba(255,255,255,.5); }

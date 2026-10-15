@@ -70,6 +70,10 @@ async function loadArticles() {
 
   try {
     const res = await fetch(`https://api.github.com/repos/${REPO}/contents/articles?ref=${BRANCH}`);
+    if (res.status === 404) {
+      if (loading) loading.textContent = 'Aucun article publié pour le moment.';
+      return;
+    }
     if (!res.ok) throw new Error('GitHub API error');
     const files = await res.json();
 
@@ -87,13 +91,39 @@ async function loadArticles() {
       return { meta, slug: f.name };
     }));
 
+    // Trier par date décroissante
     articles.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
 
     if (loading) loading.remove();
-    articles.forEach(({ meta, slug }) => {
+
+    // Article à la une = le plus récent
+    const featured = articles[0];
+    const featuredSection = document.getElementById('featured-section');
+    const featuredCard = document.getElementById('featured-card');
+    if (featured && featuredSection && featuredCard) {
+      const fImg = featured.meta.cover || CATEGORY_IMAGES[featured.meta.category] || CATEGORY_IMAGES['Culture'];
+      const fReadtime = featured.meta.readtime ? `· ${featured.meta.readtime} min de lecture` : '';
+      featuredCard.innerHTML = `
+        <img class="featured-img" src="${fImg}" alt="${featured.meta.title || ''}">
+        <div class="featured-content">
+          <span class="category-tag">${featured.meta.category || ''}</span>
+          <h2>${featured.meta.title || 'Sans titre'}</h2>
+          <p>${featured.meta.description || ''}</p>
+          <div class="article-meta">
+            <span>${formatDate(featured.meta.date)}</span>
+            <span>${fReadtime}</span>
+          </div>
+          <a href="/articles/${featured.slug}" class="btn btn-primary">Lire l'article</a>
+        </div>`;
+      featuredSection.style.display = '';
+    }
+
+    // Les autres articles dans la grille
+    articles.slice(1).forEach(({ meta, slug }) => {
       grid.insertAdjacentHTML('beforeend', buildCard(meta, slug));
     });
 
+    // Réactiver les filtres
     if (typeof initFilters === 'function') initFilters();
 
   } catch (e) {
