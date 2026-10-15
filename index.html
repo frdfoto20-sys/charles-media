@@ -3,187 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Charles.média — Analyses & réflexions personnelles</title>
-  <meta name="description" content="Un espace de réflexion personnelle sur l'économie, la nature, la politique et la technologie. Pas un journal — une curiosité partagée.">
-  <meta name="robots" content="index, follow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <title>Administration — Charles.média</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-
-<!-- HEADER -->
-<header class="site-header">
-  <div class="header-inner">
-    <a href="/" class="site-logo">
-      <span class="logo-charles">Charles</span>
-      <span class="logo-media">.média</span>
-    </a>
-    <nav class="site-nav" aria-label="Navigation principale">
-      <a href="/">Accueil</a>
-      <a href="#articles">Articles</a>
-      <a href="/mentions-legales.html">Mentions légales</a>
-    </nav>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <span class="hero-label">Réflexions personnelles</span>
-    <h1>Curiosités & Analyses</h1>
-    <p>Un espace pour partager mes recherches sur l'économie, la nature, la politique et les technologies. Pas un journal — une curiosité partagée.</p>
-  </div>
-</section>
-
-<!-- ARTICLE À LA UNE -->
-<section class="featured-section container">
-  <p class="section-title">À la une</p>
-  <article class="featured-card">
-    <img class="featured-img"
-         src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
-         alt="Graphique économique illustrant l'inflation">
-    <div class="featured-content">
-      <span class="category-tag">Économie</span>
-      <h2>Pourquoi l'inflation persiste malgré la hausse des taux ?</h2>
-      <p>Les banques centrales ont relevé leurs taux directeurs à des niveaux inédits depuis 2008. Pourtant, les prix continuent de grimper dans de nombreux secteurs. Une analyse des mécanismes souvent ignorés.</p>
-      <div class="article-meta">
-        <span>12 octobre 2026</span>
-        <span>· 8 min de lecture</span>
-      </div>
-      <a href="/articles/pourquoi-linflation-persiste.html" class="btn btn-primary">Lire l'article</a>
-    </div>
-  </article>
-</section>
-
-<!-- FILTRES PAR TAG -->
-<section class="tag-filter-section container" id="articles">
-  <div class="tag-filters">
-    <button class="tag-btn" data-tag="all">Tous</button>
-    <button class="tag-btn" data-tag="economie">Économie</button>
-    <button class="tag-btn" data-tag="nature">Nature</button>
-    <button class="tag-btn" data-tag="politique">Politique</button>
-    <button class="tag-btn" data-tag="technologie">Technologie</button>
-  </div>
-</section>
-
-<!-- GRILLE D'ARTICLES -->
-<section class="articles-section container">
-  <p class="section-title">Tous les articles</p>
-  <div class="articles-grid">
-
-    <article class="article-card" data-tag="nature">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80" alt="Forêt tropicale">
-      <div class="card-body">
-        <span class="category-tag">Nature</span>
-        <h3>La forêt tropicale, un régulateur climatique méconnu</h3>
-        <p>Au-delà du CO₂, les forêts tropicales influencent les cycles de l'eau et les courants atmosphériques à l'échelle planétaire.</p>
-        <div class="article-meta">
-          <span>5 octobre 2026</span>
-          <span>· 6 min</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="article-card" data-tag="technologie">
-      <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80" alt="Intelligence artificielle">
-      <div class="card-body">
-        <span class="category-tag">Technologie</span>
-        <h3>L'IA générative va-t-elle remplacer les créateurs ?</h3>
-        <p>Entre opportunité et menace, les outils d'intelligence artificielle transforment profondément les métiers créatifs. Réflexion nuancée.</p>
-        <div class="article-meta">
-          <span>28 septembre 2026</span>
-          <span>· 7 min</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="article-card" data-tag="politique">
-      <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&q=80" alt="Parlement">
-      <div class="card-body">
-        <span class="category-tag">Politique</span>
-        <h3>Démocratie directe : illusion ou avenir ?</h3>
-        <p>Les référendums et initiatives citoyennes séduisent de plus en plus. Mais sont-ils réellement compatibles avec des sociétés complexes ?</p>
-        <div class="article-meta">
-          <span>20 septembre 2026</span>
-          <span>· 9 min</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="article-card" data-tag="economie">
-      <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&q=80" alt="Marché">
-      <div class="card-body">
-        <span class="category-tag">Économie</span>
-        <h3>Le revenu universel : les expériences qui éclairent le débat</h3>
-        <p>Finlande, Kenya, Californie… Plusieurs pays ont expérimenté le revenu universel. Que nous disent vraiment ces résultats ?</p>
-        <div class="article-meta">
-          <span>12 septembre 2026</span>
-          <span>· 10 min</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="article-card" data-tag="nature">
-      <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=600&q=80" alt="Océan">
-      <div class="card-body">
-        <span class="category-tag">Nature</span>
-        <h3>Les fonds marins, dernière frontière inexplorée</h3>
-        <p>On connaît mieux la surface de Mars que nos abysses. Que cache cet univers sous pression extrême, et pourquoi le préserver d'urgence ?</p>
-        <div class="article-meta">
-          <span>3 septembre 2026</span>
-          <span>· 5 min</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="article-card" data-tag="technologie">
-      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Microprocesseur">
-      <div class="card-body">
-        <span class="category-tag">Technologie</span>
-        <h3>La puce électronique, nerf de la guerre géopolitique</h3>
-        <p>Taïwan, TSMC, sanctions américaines sur la Chine… La guerre des semi-conducteurs remodèle les alliances mondiales.</p>
-        <div class="article-meta">
-          <span>25 août 2026</span>
-          <span>· 8 min</span>
-        </div>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-logo-charles">Charles</div>
-    <div class="footer-logo-media">.média</div>
-    <p class="footer-tagline">Réflexions personnelles sur le monde</p>
-    <div class="footer-links">
-      <a href="/">Accueil</a>
-      <a href="#articles">Articles</a>
-      <a href="/mentions-legales.html">Mentions légales</a>
-    </div>
-    <p class="footer-disclaimer">
-      Ce site est un espace d'expression personnelle. Son auteur n'est pas journaliste professionnel
-      et ne prétend pas à ce titre. Les contenus publiés reflètent des recherches et opinions personnelles.
-    </p>
-    <p style="color:rgba(255,255,255,.3);font-size:.7rem;">© 2026 Charles.média — Hébergé sur Netlify</p>
-  </div>
-</footer>
-
-<script src="/js/main.js"></script>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
+  <div id="nc-root"></div>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
