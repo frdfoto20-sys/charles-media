@@ -4,23 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page introuvable — Charles.média</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <nav class="nav">
-      <a href="index.html" class="logo">
-        <span class="logo-charles">Charles</span>
-        <span class="logo-media">Média</span>
-      </a>
-    </nav>
-    <div style="text-align:center; padding: 5rem 0;">
-      <p style="font-size:64px; color:var(--bordeaux); font-family:Georgia,serif; margin-bottom:1rem; line-height:1">404</p>
-      <p style="font-size:18px; color:var(--secondary); margin-bottom:2rem;">Cette page n'existe pas.</p>
-      <a href="index.html" style="font-size:13px; color:var(--rouille); border-bottom:1px solid var(--rouille); padding-bottom:2px;">
-        Retour à l'accueil
-      </a>
-    </div>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
+      <span class="logo-charles">Charles</span>
+      <span class="logo-media">Média</span>
+    </a>
   </div>
+</header>
+<main>
+  <div class="error-page container">
+    <div class="error-code">404</div>
+    <h2>Page introuvable</h2>
+    <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+    <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+  </div>
+</main>
 </body>
 </html>
