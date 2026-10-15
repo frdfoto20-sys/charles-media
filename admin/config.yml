@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: frdfoto20-sys/charles-media
+  name: git-gateway
   branch: main
 
 media_folder: "articles/images"
