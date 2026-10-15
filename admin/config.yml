@@ -1,0 +1,39 @@
+backend:
+  name: github
+  repo: TON-USERNAME/charles-media
+  branch: main
+
+media_folder: "articles/images"
+public_folder: "images"
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    folder: "articles"
+    create: true
+    slug: "{{slug}}"
+    extension: "html"
+    format: "frontmatter"
+    editor:
+      preview: false
+    fields:
+      - { label: "Titre",       name: "title",       widget: "string" }
+      - { label: "Catégorie",   name: "category",    widget: "select",
+          options: ["Économie", "Nature", "Politique", "Technologie", "Société", "Science", "Culture"] }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Date",        name: "date",        widget: "datetime", format: "DD MMMM YYYY" }
+      - { label: "Durée de lecture (min)", name: "readtime", widget: "number", default: 5 }
+      - { label: "Image de couverture", name: "cover", widget: "image", required: false }
+      - { label: "Corps de l'article",  name: "body",  widget: "markdown" }
+      - label: "Question de débat 1"
+        name: "debate1"
+        widget: "object"
+        fields:
+          - { label: "Question", name: "question", widget: "string" }
+          - { label: "Options (séparées par ;)", name: "options", widget: "string", default: "Oui;Non;Ça dépend" }
+      - label: "Question de débat 2"
+        name: "debate2"
+        widget: "object"
+        fields:
+          - { label: "Question", name: "question", widget: "string" }
+          - { label: "Options (séparées par ;)", name: "options", widget: "string", default: "Oui;Non;Autre" }
