@@ -34,6 +34,18 @@ function parseFrontmatter(text) {
   const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { meta: {}, body: text };
   const fm = {};
+  // Lecture YAML complète (l'admin coupe les longues lignes sur plusieurs lignes)
+  if (window.jsyaml) {
+    try {
+      const flat = (obj, prefix) => Object.entries(obj || {}).forEach(([k, v]) => {
+        const key = prefix ? `${prefix}.${k}` : k;
+        if (v && typeof v === 'object' && !Array.isArray(v) && !(v instanceof Date)) flat(v, key);
+        else fm[key] = v instanceof Date ? v.toISOString() : String(v);
+      });
+      flat(window.jsyaml.load(match[1]), '');
+      return { meta: fm, body: match[2] };
+    } catch (e) { console.warn('YAML', e); }
+  }
   let parent = null;
   match[1].split(/\r?\n/).forEach(line => {
     const idx = line.indexOf(':');
@@ -45,7 +57,7 @@ function parseFrontmatter(text) {
       parent = val === '' ? key : null;
       if (val !== '') fm[key] = val;
     } else if (parent) {
-      fm[`${parent}.${key}`] = val;   // ex : debate1.question
+      fm[`${parent}.${key}`] = val;
     } else {
       fm[key] = val;
     }
