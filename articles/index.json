@@ -9,16 +9,5 @@
     "readtime": "7",
     "featured": true,
     "cover": "images/couverture-femme-couchee-titre.jpg"
-  },
-  {
-    "slug": "test-sitemap.html",
-    "title": "Test automatique (à supprimer)",
-    "category": "Culture",
-    "description": "Test du sitemap.",
-    "date": "1 January 2020",
-    "isoDate": "2020-01-01",
-    "readtime": "1",
-    "featured": false,
-    "cover": ""
   }
 ]
