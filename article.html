@@ -182,7 +182,7 @@ async function loadArticle() {
       el.setAttribute(attr, val);
     };
     if (meta.description) setMeta('meta[name="description"]', () => Object.assign(document.createElement('meta'), { name: 'description' }), 'content', meta.description);
-    setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `https://charles.frdfoto.com/articles/${slug}`);
+    setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `https://xn--charlesmdia-ibb.frdphoto.com/articles/${slug}`);
 
     const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="${meta.title}">` : '';
     const readtime = meta.readtime ? `· ${meta.readtime} min de lecture` : '';

@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 
-const SITE = 'https://charles.frdfoto.com';
+const SITE = 'https://xn--charlesmdia-ibb.frdphoto.com';
 const DIR = 'articles';
 
 const months = { january: 0, february: 1, march: 2, april: 3, may: 4, june: 5, july: 6, august: 7,
