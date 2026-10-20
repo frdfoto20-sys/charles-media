@@ -31,17 +31,26 @@ const CATEGORY_TAGS = {
 };
 
 function parseFrontmatter(text) {
-  const match = text.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) return {};
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!match) return { meta: {}, body: text };
   const fm = {};
-  match[1].split('\n').forEach(line => {
+  let parent = null;
+  match[1].split(/\r?\n/).forEach(line => {
     const idx = line.indexOf(':');
     if (idx === -1) return;
+    const indented = /^\s+/.test(line);
     const key = line.slice(0, idx).trim();
     const val = line.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
-    fm[key] = val;
+    if (!indented) {
+      parent = val === '' ? key : null;
+      if (val !== '') fm[key] = val;
+    } else if (parent) {
+      fm[`${parent}.${key}`] = val;   // ex : debate1.question
+    } else {
+      fm[key] = val;
+    }
   });
-  return fm;
+  return { meta: fm, body: match[2] };
 }
 
 function formatDate(dateStr) {
@@ -95,7 +104,7 @@ async function loadArticles() {
     const articles = await Promise.all(htmlFiles.map(async f => {
       const r = await fetch(f.download_url);
       const text = await r.text();
-      const meta = parseFrontmatter(text);
+      const { meta } = parseFrontmatter(text);
       return { meta, slug: f.name };
     }));
 

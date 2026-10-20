@@ -28,6 +28,7 @@
   from = "/articles/*"
   to = "/article.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
