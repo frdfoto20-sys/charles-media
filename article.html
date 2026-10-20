@@ -18,6 +18,11 @@
     .article-body h2, .article-body h3 { font-family: var(--font-display); color: var(--navy); margin: 2rem 0 .75rem; }
     .article-body p { margin-bottom: 1.25rem; }
     .article-body a { color: var(--bordeaux); }
+    .article-body .table-wrap { overflow-x: auto; margin: 1.5rem 0; -webkit-overflow-scrolling: touch; }
+    .article-body table { width: 100%; border-collapse: collapse; font-size: .95rem; line-height: 1.5; }
+    .article-body th { background: var(--navy); color: #fff; text-align: left; font-weight: 600; padding: .6rem .8rem; }
+    .article-body td { padding: .55rem .8rem; border-bottom: 1px solid #e3d8cc; vertical-align: top; }
+    .article-body tbody tr:nth-child(even) td { background: var(--nude-card); }
     .debate-section { background: var(--nude-card); border-radius: 12px; padding: 1.5rem 2rem; margin: 3rem 0; }
     .debate-section h3 { font-family: var(--font-display); color: var(--navy); font-size: 1.1rem; margin-bottom: 1.5rem; }
     .debate-question { margin-bottom: 1.5rem; }
@@ -123,7 +128,12 @@ function renderBody(md) {
   if (!window.marked) return md;
   const html = marked.parse(md);
   // Images insérées dans le texte : les lire aussi sur GitHub
-  return html.replace(/<img src="(?!https?:)([^"]+)"/g, (m, src) => `<img src="${imgUrl(src)}"`);
+  return html
+    .replace(/<img src="(?!https?:)([^"]+)"/g, (m, src) => `<img src="${imgUrl(src)}"`)
+    // Tableaux : défilement horizontal sur téléphone
+    .replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>')
+    // Liens vers d'autres sites : ouverture dans un nouvel onglet
+    .replace(/<a href="(https?:\/\/[^"]+)"/g, '<a href="$1" target="_blank" rel="noopener"');
 }
 
 async function loadArticle() {
