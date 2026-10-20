@@ -20,6 +20,12 @@
   status = 404
 
 [[redirects]]
+  from = "/sitemap.xml"
+  to = "https://raw.githubusercontent.com/frdfoto20-sys/charles-media/main/articles/sitemap.xml"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/admin/*"
   to = "/admin/:splat"
   status = 200

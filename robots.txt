@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin/
 Disallow: /.git/
 
-Sitemap: https://charles.media/sitemap.xml
+Sitemap: https://charles.frdfoto.com/sitemap.xml

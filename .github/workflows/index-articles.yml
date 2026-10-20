@@ -1,0 +1,41 @@
+# Met à jour la liste des articles et le sitemap à chaque publication depuis l'admin.
+# Les fichiers générés sont dans articles/ : Netlify ne relance pas de mise en ligne (0 crédit).
+name: Index des articles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'articles/*.html'
+      - 'scripts/build-index.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: index-articles
+  cancel-in-progress: false
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save js-yaml@4.1.0
+      - run: node scripts/build-index.mjs
+      - name: Enregistrer si quelque chose a changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add articles/index.json articles/sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Rien à mettre à jour."
+          else
+            git commit -m "Mise à jour de l'index des articles et du sitemap"
+            git pull --rebase origin main
+            git push
+          fi

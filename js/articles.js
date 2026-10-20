@@ -93,32 +93,44 @@ function buildCard(meta, slug) {
     </article>`;
 }
 
+// 1) Liste tenue à jour automatiquement par GitHub (rapide, sans limite)
+async function fromIndex() {
+  try {
+    const v = Math.floor(Date.now() / 60000);
+    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/index.json?v=${v}`);
+    if (!r.ok) return null;
+    const list = await r.json();
+    if (!Array.isArray(list)) return null;
+    return list.map(a => ({
+      slug: a.slug,
+      meta: { ...a, featured: a.featured ? 'true' : 'false', date: a.isoDate || a.date },
+    }));
+  } catch (e) { return null; }
+}
+
+// 2) Secours : lecture directe du dossier sur GitHub (limitée à 60 visites/heure)
+async function fromApi() {
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/articles?ref=${BRANCH}`);
+  if (res.status === 404) return [];
+  if (!res.ok) throw new Error('GitHub API error');
+  const files = await res.json();
+  const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.type === 'file');
+  return Promise.all(htmlFiles.map(async f => {
+    const text = await (await fetch(f.download_url)).text();
+    return { meta: parseFrontmatter(text).meta, slug: f.name };
+  }));
+}
+
 async function loadArticles() {
   const grid = document.getElementById('articles-grid');
   const loading = document.getElementById('articles-loading');
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/articles?ref=${BRANCH}`);
-    if (res.status === 404) {
+    const articles = (await fromIndex()) || (await fromApi());
+    if (!articles || articles.length === 0) {
       if (loading) loading.textContent = 'Aucun article publié pour le moment.';
       return;
     }
-    if (!res.ok) throw new Error('GitHub API error');
-    const files = await res.json();
-
-    const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.type === 'file');
-
-    if (htmlFiles.length === 0) {
-      if (loading) loading.textContent = 'Aucun article publié pour le moment.';
-      return;
-    }
-
-    const articles = await Promise.all(htmlFiles.map(async f => {
-      const r = await fetch(f.download_url);
-      const text = await r.text();
-      const { meta } = parseFrontmatter(text);
-      return { meta, slug: f.name };
-    }));
 
     // Trier par date décroissante
     articles.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));

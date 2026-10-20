@@ -175,6 +175,14 @@ async function loadArticle() {
     const { meta, body } = parseFrontmatter(text);
 
     document.title = `${meta.title || 'Article'} — Charles.média`;
+    // Pour Google : description et adresse officielle de la page
+    const setMeta = (sel, make, attr, val) => {
+      let el = document.head.querySelector(sel);
+      if (!el) { el = make(); document.head.appendChild(el); }
+      el.setAttribute(attr, val);
+    };
+    if (meta.description) setMeta('meta[name="description"]', () => Object.assign(document.createElement('meta'), { name: 'description' }), 'content', meta.description);
+    setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `https://charles.frdfoto.com/articles/${slug}`);
 
     const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="${meta.title}">` : '';
     const readtime = meta.readtime ? `· ${meta.readtime} min de lecture` : '';
