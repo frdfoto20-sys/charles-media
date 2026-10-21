@@ -1,4 +1,4 @@
-/* Charles.média — JS principal */
+/* Charles le média — JS principal */
 
 /* ---- Débats ---- */
 function toggleDebate(btn) {

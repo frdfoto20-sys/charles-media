@@ -103,7 +103,7 @@ async function fromIndex() {
     if (!Array.isArray(list)) return null;
     return list.map(a => ({
       slug: a.slug,
-      meta: { ...a, featured: a.featured ? 'true' : 'false', date: a.isoDate || a.date },
+      meta: { ...a, featured: a.featured ? 'true' : 'false', date: a.isoDate ? `${a.isoDate}T12:00:00` : a.date },
     }));
   } catch (e) { return null; }
 }
@@ -172,5 +172,13 @@ async function loadArticles() {
     console.error(e);
   }
 }
+
+// Adresse officielle de la page d'accueil (suit automatiquement le nom de domaine)
+(function () {
+  if (location.pathname !== '/' && location.pathname !== '/index.html') return;
+  const l = document.createElement('link');
+  l.rel = 'canonical'; l.href = `${location.origin}/`;
+  document.head.appendChild(l);
+})();
 
 loadArticles();

@@ -20,6 +20,12 @@
   status = 404
 
 [[redirects]]
+  from = "/robots.txt"
+  to = "https://raw.githubusercontent.com/frdfoto20-sys/charles-media/main/articles/robots.txt"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/sitemap.xml"
   to = "https://raw.githubusercontent.com/frdfoto20-sys/charles-media/main/articles/sitemap.xml"
   status = 200

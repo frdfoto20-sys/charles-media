@@ -5,7 +5,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 
-const SITE = 'https://xn--charlesmdia-ibb.frdphoto.com';
+// Adresse du site : modifiable dans articles/site.json (sans mise en ligne Netlify, donc gratuit)
+let SITE = 'https://charleslemedia.com';
+try { SITE = JSON.parse(fs.readFileSync('articles/site.json', 'utf8')).url.replace(/\/$/, '') || SITE; } catch (e) {}
 const DIR = 'articles';
 
 const months = { january: 0, february: 1, march: 2, april: 3, may: 4, june: 5, july: 6, august: 7,
@@ -56,5 +58,8 @@ const urls = [
 ];
 fs.writeFileSync(path.join(DIR, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
+
+fs.writeFileSync(path.join(DIR, 'robots.txt'),
+  `User-agent: *\nDisallow: /admin/\nDisallow: /.git/\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
 console.log(`${articles.length} article(s) indexé(s).`);

@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /admin/
-Disallow: /.git/
-
-Sitemap: https://xn--charlesmdia-ibb.frdphoto.com/sitemap.xml

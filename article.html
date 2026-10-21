@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Article — Charles.média</title>
+  <title>Article — Charles le média</title>
   <meta name="robots" content="index, follow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
   <div class="header-inner">
     <a href="/" class="site-logo">
       <span class="logo-charles">Charles</span>
-      <span class="logo-media">Média</span>
+      <span class="logo-media">Le Média</span>
     </a>
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="/">Accueil</a>
@@ -57,7 +57,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-logo-charles">Charles</div>
-    <div class="footer-logo-media">Média</div>
+    <div class="footer-logo-media">Le Média</div>
     <p class="footer-tagline">Réflexions personnelles sur le monde</p>
     <div class="footer-links">
       <a href="/">Accueil</a>
@@ -68,7 +68,7 @@
       Ce site est un espace d'expression personnelle. Son auteur n'est pas journaliste professionnel
       et ne prétend pas à ce titre. Les contenus publiés reflètent des recherches et opinions personnelles.
     </p>
-    <p style="color:rgba(255,255,255,.3);font-size:.7rem;">© 2026 Charles.média — Hébergé sur Netlify</p>
+    <p style="color:rgba(255,255,255,.3);font-size:.7rem;">© 2026 Charles le média — Hébergé sur Netlify</p>
   </div>
 </footer>
 
@@ -174,7 +174,7 @@ async function loadArticle() {
     const text = await res.text();
     const { meta, body } = parseFrontmatter(text);
 
-    document.title = `${meta.title || 'Article'} — Charles.média`;
+    document.title = `${meta.title || 'Article'} — Charles le média`;
     // Pour Google : description et adresse officielle de la page
     const setMeta = (sel, make, attr, val) => {
       let el = document.head.querySelector(sel);
@@ -182,7 +182,7 @@ async function loadArticle() {
       el.setAttribute(attr, val);
     };
     if (meta.description) setMeta('meta[name="description"]', () => Object.assign(document.createElement('meta'), { name: 'description' }), 'content', meta.description);
-    setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `https://xn--charlesmdia-ibb.frdphoto.com/articles/${slug}`);
+    setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `${location.origin}/articles/${slug}`);
 
     const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="${meta.title}">` : '';
     const readtime = meta.readtime ? `· ${meta.readtime} min de lecture` : '';
