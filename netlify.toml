@@ -14,6 +14,67 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 
+# Anciennes adresses : renvoi permanent (301) vers charleslemedia.com
+[[redirects]]
+  from = "https://frdphoto.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://frdphoto.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.frdphoto.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.frdphoto.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://xn--charlesmdia-ibb.frdphoto.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://xn--charlesmdia-ibb.frdphoto.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://charlesmedia.netlify.app/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://charlesmedia.netlify.app/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.charleslemedia.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.charleslemedia.com/*"
+  to = "https://charleslemedia.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/.git/*"
   to = "/404.html"
