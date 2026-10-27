@@ -3,6 +3,10 @@ backend:
   repo: frdfoto20-sys/charles-media
   branch: main
 
+# Brouillons : les articles restent en attente jusqu'à ce qu'on clique sur « Publier »
+publish_mode: editorial_workflow
+locale: fr
+
 media_folder: "articles/images"
 public_folder: "images"
 
@@ -15,7 +19,7 @@ collections:
     extension: "html"
     format: "frontmatter"
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "Titre",       name: "title",       widget: "string" }
       - { label: "Catégorie",   name: "category",    widget: "select",

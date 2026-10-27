@@ -8,5 +8,49 @@
 </head>
 <body>
   <script src="https://unpkg.com/netlify-cms@2.10.191/dist/netlify-cms.js"></script>
+  <script>
+    // Aperçu de l'article dans l'admin, avec la mise en page du site
+    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Montserrat:wght@400;600;700;800&display=swap');
+    CMS.registerPreviewStyle('/css/style.css');
+    CMS.registerPreviewStyle('/admin/preview.css');
+
+    function formatDate(v) {
+      if (!v) return '';
+      var d = v instanceof Date ? v : new Date(v);
+      return isNaN(d) ? String(v) : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    var ArticlePreview = createClass({
+      render: function () {
+        var entry = this.props.entry;
+        var get = function (k) { return entry.getIn(['data'].concat(k.split('.'))); };
+        var cover = get('cover');
+        var coverAsset = cover ? this.props.getAsset(cover) : null;
+        var readtime = get('readtime');
+        var debates = ['debate1', 'debate2'].map(function (k) {
+          var q = get(k + '.question');
+          if (!q) return null;
+          var opts = String(get(k + '.options') || '').split(';').filter(function (o) { return o.trim(); });
+          return h('div', { className: 'debate-question', key: k },
+            h('p', {}, q),
+            h('div', { className: 'debate-options' }, opts.map(function (o, i) {
+              return h('button', { className: 'debate-btn', key: i }, o.trim());
+            })));
+        }).filter(Boolean);
+        return h('div', { className: 'article-full' },
+          h('div', { className: 'preview-note' }, 'Aperçu : voici à quoi ressemblera l\u2019article sur le site.'),
+          h('span', { className: 'category-tag' }, get('category') || ''),
+          h('h1', {}, get('title') || 'Sans titre'),
+          h('div', { className: 'article-meta' },
+            h('span', {}, formatDate(get('date'))),
+            h('span', {}, readtime ? ' · ' + readtime + ' min de lecture' : '')),
+          coverAsset ? h('img', { className: 'cover-img', src: coverAsset.toString(), alt: '' }) : null,
+          h('div', { className: 'article-body' }, this.props.widgetFor('body')),
+          debates.length ? h('div', { className: 'debate-section' }, h('h3', {}, '\ud83d\udcac Questions de débat'), debates) : null
+        );
+      }
+    });
+    CMS.registerPreviewTemplate('articles', ArticlePreview);
+  </script>
 </body>
 </html>

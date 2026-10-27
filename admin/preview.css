@@ -1,0 +1,27 @@
+/* Styles de l'aperçu dans l'admin (copiés de article.html) */
+body { background: var(--nude, #F4EBE3); }
+.article-full { max-width: 740px; margin: 3rem auto; padding: 0 1.5rem 4rem; }
+    .article-full .category-tag { margin-bottom: 1rem; display: inline-block; }
+    .article-full h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
+    .article-full .article-meta { color: var(--secondary); font-size: .85rem; margin-bottom: 2rem; }
+    .article-full .cover-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; max-height: 420px; object-fit: cover; }
+    .article-body { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.85; color: #333; }
+    .article-body h2, .article-body h3 { font-family: var(--font-display); color: var(--navy); margin: 2rem 0 .75rem; }
+    .article-body p { margin-bottom: 1.25rem; }
+    .article-body a { color: var(--bordeaux); }
+    .article-body .table-wrap { overflow-x: auto; margin: 1.5rem 0; -webkit-overflow-scrolling: touch; }
+    .article-body table { width: 100%; border-collapse: collapse; font-size: .95rem; line-height: 1.5; }
+    .article-body th { background: var(--navy); color: #fff; text-align: left; font-weight: 600; padding: .6rem .8rem; }
+    .article-body td { padding: .55rem .8rem; border-bottom: 1px solid #e3d8cc; vertical-align: top; }
+    .article-body tbody tr:nth-child(even) td { background: var(--nude-card); }
+    .debate-section { background: var(--nude-card); border-radius: 12px; padding: 1.5rem 2rem; margin: 3rem 0; }
+    .debate-section h3 { font-family: var(--font-display); color: var(--navy); font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .debate-question { margin-bottom: 1.5rem; }
+    .debate-question p { font-weight: 600; color: var(--navy); margin-bottom: .75rem; }
+    .debate-options { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .debate-btn { background: white; border: 1.5px solid var(--bordeaux); color: var(--bordeaux); padding: .4rem 1rem; border-radius: 20px; cursor: pointer; font-size: .9rem; transition: all .2s; }
+    .debate-btn:hover, .debate-btn.selected { background: var(--bordeaux); color: white; }
+    .back-link { display: inline-flex; align-items: center; gap: .5rem; color: var(--secondary); font-size: .9rem; margin: 2rem 0 0; text-decoration: none; }
+    .back-link:hover { color: var(--navy); }
+.article-full { margin-top: 1.5rem; }
+.preview-note { font-family: Montserrat, sans-serif; font-size: .8rem; color: #6B4F45; background: #fff; border: 1px dashed #c9b8a8; border-radius: 8px; padding: .5rem .8rem; margin-bottom: 1.5rem; }
