@@ -40,6 +40,7 @@
       <a href="/#articles">Articles</a>
       <a href="/mentions-legales.html" class="nav-legal">Mentions légales</a>
       <a href="https://www.instagram.com/charleslemedia/" class="nav-social" target="_blank" rel="noopener" aria-label="Instagram de Charles le Média"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" class="nav-social" data-social="facebook" target="_blank" rel="noopener" aria-label="Page Facebook de Charles le Média" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8V6.2c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.5 10 6v2H8v3h2v11h4V11h2.7l.3-3z"/></svg></a>
     </nav>
   </div>
   <div class="read-progress" id="read-progress" aria-hidden="true"></div>
@@ -56,6 +57,7 @@
     <p class="footer-tagline">Réflexions personnelles sur le monde</p>
     <div class="footer-contact">
       <a href="https://www.instagram.com/charleslemedia/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>@charleslemedia</span></a>
+      <a href="#" data-social="facebook" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8V6.2c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.5 10 6v2H8v3h2v11h4V11h2.7l.3-3z"/></svg><span>Facebook</span></a>
       <a href="mailto:charleslemedia@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>charleslemedia@gmail.com</span></a>
     </div>
     <div class="footer-links">
@@ -199,10 +201,10 @@ const ICONS = {
   link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
   share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>',
 };
-function buildShare(title) {
+function buildShare(title, top) {
   const url = location.href.split('#')[0];
   const text = `${title} — Charles le Média`;
-  return `<div class="share-bar" role="group" aria-label="Partager l'article">
+  return `<div class="share-bar${top ? ' share-bar--top' : ''}" role="group" aria-label="Partager l'article">
     <span class="label">Partager</span>
     ${navigator.share ? `<button type="button" class="share-btn" data-share="native">${ICONS.share}Partager…</button>` : ''}
     <a class="share-btn" href="https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}" target="_blank" rel="noopener">${ICONS.whatsapp}WhatsApp</a>
@@ -212,8 +214,8 @@ function buildShare(title) {
   </div>`;
 }
 function initShare(container, title) {
-  const status = container.querySelector('.share-status');
   container.querySelectorAll('[data-share]').forEach(btn => btn.addEventListener('click', async () => {
+    const status = btn.closest('.share-bar').querySelector('.share-status');
     const url = location.href.split('#')[0];
     if (btn.dataset.share === 'native') {
       try { await navigator.share({ title, url }); } catch (e) { /* partage annulé */ }
@@ -289,8 +291,11 @@ function buildSeriesNav(meta, slug, index) {
 
 const FOLLOW = `
   <aside class="follow-box">
-    <p><strong>Cet article vous a intéressé ?</strong>Les prochains articles et les infographies sont annoncés sur Instagram.</p>
+    <p><strong>Cet article vous a intéressé ?</strong>Les prochains articles et les infographies sont annoncés sur les réseaux.</p>
+    <div class="follow-actions">
     <a href="https://www.instagram.com/charleslemedia/" class="btn btn-primary" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Suivre @charleslemedia</a>
+    <a href="#" class="btn btn-outline" data-social="facebook" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8V6.2c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.5 10 6v2H8v3h2v11h4V11h2.7l.3-3z"/></svg>Facebook</a>
+    </div>
   </aside>`;
 
 // Barre de progression : suit le défilement du texte de l'article
@@ -350,6 +355,7 @@ async function loadArticle() {
         <span>${h(formatDate(meta.date))}</span>
         <span>${h(readtime)}</span>
       </div>
+      ${buildShare(meta.title || '', true)}
       ${cover}
       ${buildKeyFigures(raw)}
       <div class="article-body">${renderBody(body)}</div>
@@ -368,6 +374,7 @@ async function loadArticle() {
     }));
 
     initShare(container, meta.title || '');
+    if (window.applySocial) window.applySocial();
     initProgress();
   } catch(e) {
     container.innerHTML = '<p>Impossible de charger cet article. Vérifiez votre connexion puis rechargez la page. <a href="/">Retour à l\'accueil</a></p>';
@@ -377,5 +384,6 @@ async function loadArticle() {
 
 loadArticle();
 </script>
+<script src="/js/social.js"></script>
 </body>
 </html>

@@ -736,6 +736,9 @@ p { margin-bottom: 1rem; text-wrap: pretty; }
   padding: 1.5rem 0;
   margin: 2.5rem 0 0;
 }
+.follow-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.share-bar--top { margin: 0 0 1.75rem; }
+.share-bar--top .label { display: none; }
 .follow-box p { margin: 0; color: var(--ink-2); font-size: .95rem; max-width: 26rem; }
 .follow-box strong { display: block; font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; color: var(--ink); margin-bottom: .2rem; }
 
