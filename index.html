@@ -63,9 +63,12 @@
 </section>
 
 <!-- ARTICLE À LA UNE -->
-<section class="featured-section container" id="featured-section" hidden>
+<section class="featured-section container" id="featured-section">
   <p class="section-title">À la une</p>
-  <article class="featured-card" id="featured-card"></article>
+  <article class="featured-card" id="featured-card">
+    <span class="skeleton media" aria-hidden="true" style="aspect-ratio:4/3"></span>
+    <div aria-hidden="true"><span class="skeleton line short"></span><span class="skeleton title"></span><span class="skeleton title" style="width:60%"></span><span class="skeleton line"></span><span class="skeleton line short"></span></div>
+  </article>
 </section>
 
 <!-- SÉRIES (générées à partir des articles) -->
@@ -80,7 +83,10 @@
 <section class="articles-section container" id="articles">
   <p class="section-title">Tous les articles</p>
   <div class="articles-grid" id="articles-grid">
-    <p id="articles-loading" class="empty-filter" role="status">Chargement des articles…</p>
+    <p id="articles-loading" class="empty-filter" role="status" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Chargement des articles…</p>
+    <div class="article-card is-skeleton" aria-hidden="true"><span class="skeleton media"></span><span class="skeleton line short"></span><span class="skeleton title"></span><span class="skeleton line"></span><span class="skeleton line short"></span></div>
+    <div class="article-card is-skeleton" aria-hidden="true"><span class="skeleton media"></span><span class="skeleton line short"></span><span class="skeleton title"></span><span class="skeleton line"></span><span class="skeleton line short"></span></div>
+    <div class="article-card is-skeleton" aria-hidden="true"><span class="skeleton media"></span><span class="skeleton line short"></span><span class="skeleton title"></span><span class="skeleton line"></span><span class="skeleton line short"></span></div>
   </div>
 </section>
 </main>

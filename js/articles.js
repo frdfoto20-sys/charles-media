@@ -165,8 +165,10 @@ async function loadArticles() {
   const loading = document.getElementById('articles-loading');
   try {
     const articles = (await fromIndex()) || (await fromApi());
+    grid.querySelectorAll('.is-skeleton').forEach(el => el.remove());
     if (!articles || articles.length === 0) {
-      if (loading) loading.textContent = 'Aucun article publié pour le moment.';
+      document.getElementById('featured-section').hidden = true;
+      if (loading) { loading.removeAttribute('style'); loading.textContent = 'Aucun article publié pour le moment.'; }
       return;
     }
     articles.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
@@ -181,6 +183,9 @@ async function loadArticles() {
     grid.insertAdjacentHTML('beforeend', rest.map(buildCard).join(''));
     renderFilters(rest);
   } catch (e) {
+    grid.querySelectorAll('.is-skeleton').forEach(el => el.remove());
+    document.getElementById('featured-section').hidden = true;
+    if (loading) loading.removeAttribute('style');
     if (loading) loading.textContent = 'Impossible de charger les articles. Vérifiez votre connexion puis rechargez la page.';
     console.error(e);
   }
