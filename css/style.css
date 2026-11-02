@@ -25,6 +25,10 @@
   --warn-line:   #E9B44C;
   --warn-ink:    #5E4500;
   --img-filter:  none;
+  /* Anciens noms, encore utilisés par l'aperçu de l'admin */
+  --bordeaux:    var(--accent);
+  --nude-card:   var(--surface);
+  --secondary:   var(--ink-2);
 
   /* Typographie */
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
