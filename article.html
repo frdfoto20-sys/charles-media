@@ -369,7 +369,7 @@ async function loadArticle() {
     if (meta.description) setMeta('meta[name="description"]', () => Object.assign(document.createElement('meta'), { name: 'description' }), 'content', meta.description);
     setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `${location.origin}/articles/${slug}`);
 
-    const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="" fetchpriority="high">` : '';
+    const cover = meta.cover ? `<img class="cover-img" src="${h(imgUrl(meta.cover))}" alt="" fetchpriority="high">` : '';
     const readtime = meta.readtime ? `${meta.readtime} min de lecture` : '';
     const seriesTag = meta.series ? `<span class="series-tag">Série « ${h(meta.series)} » · volet ${h(meta.series_part || '')}</span>` : '';
 

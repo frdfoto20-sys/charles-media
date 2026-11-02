@@ -10,7 +10,7 @@
   --surface-2:   #FBF7F3;   /* survols, lignes paires */
   --ink:         #24160F;   /* texte principal et titres */
   --ink-2:       #5C463C;   /* texte secondaire */
-  --muted:       #826A5E;   /* dates, légendes */
+  --muted:       #776055;   /* dates, légendes */
   --line:        #E8DCD1;
   --accent:      #8B2635;   /* bordeaux : liens, surtitres, boutons */
   --accent-h:    #6E1D29;
@@ -118,6 +118,9 @@ a { color: var(--accent); text-decoration: none; -webkit-tap-highlight-color: tr
 }
 
 img { max-width: 100%; height: auto; display: block; filter: var(--img-filter); }
+
+/* Un élément marqué « hidden » reste caché, quel que soit son style */
+[hidden] { display: none !important; }
 
 ::selection { background: var(--accent-soft); color: var(--ink); }
 
