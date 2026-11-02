@@ -32,7 +32,15 @@ collections:
       - { label: "Vignette pour l'accueil (image simple, sans texte)", name: "vignette", widget: "image", required: false, hint: "Facultatif. Utilisée sur la page d'accueil à la place de la couverture. Idéal : une photo sans texte." }
       - { label: "Série (nom)", name: "series", widget: "string", required: false, hint: "Même nom exact pour tous les volets, par ex. « Le prix de nos courses »" }
       - { label: "Numéro du volet", name: "series_part", widget: "number", required: false, value_type: "int", min: 1 }
-      - { label: "Corps de l'article",  name: "body",  widget: "markdown" }
+      - label: "Chiffres clés (encadré en haut de l'article)"
+        name: "chiffres"
+        widget: "list"
+        required: false
+        hint: "Facultatif. 2 à 4 chiffres maximum. Ex. valeur « 1,43 € », libellé « le paquet de pâtes en Martinique »"
+        fields:
+          - { label: "Valeur", name: "valeur", widget: "string" }
+          - { label: "Libellé", name: "libelle", widget: "string" }
+      - { label: "Corps de l'article",  name: "body",  widget: "markdown", hint: "Note de source : écrivez texte[^1] puis, à la fin, une ligne [^1]: votre source. Légende d'image : le titre de l'image s'affiche dessous." }
       - label: "Question de débat 1"
         name: "debate1"
         widget: "object"
