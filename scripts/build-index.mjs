@@ -44,6 +44,9 @@ for (const name of fs.readdirSync(DIR)) {
     readtime: meta.readtime != null ? String(meta.readtime) : '',
     featured: meta.featured === true || meta.featured === 'true',
     cover: meta.cover || '',
+    vignette: meta.vignette || '',
+    series: meta.series || '',
+    series_part: meta.series_part != null ? String(meta.series_part) : '',
   });
 }
 articles.sort((a, b) => (b.isoDate || '').localeCompare(a.isoDate || ''));

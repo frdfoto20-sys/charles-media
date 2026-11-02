@@ -6,33 +6,12 @@
   <title>Article — Charles le média</title>
   <meta name="robots" content="index, follow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15110F" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital@0;1&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-  <style>
-    .article-full { max-width: 740px; margin: 3rem auto; padding: 0 1.5rem 4rem; }
-    .article-full .category-tag { margin-bottom: 1rem; display: inline-block; }
-    .article-full h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
-    .article-full .article-meta { color: var(--secondary); font-size: .85rem; margin-bottom: 2rem; }
-    .article-full .cover-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; max-height: 420px; object-fit: cover; }
-    .article-body { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.85; color: #333; }
-    .article-body h2, .article-body h3 { font-family: var(--font-display); color: var(--navy); margin: 2rem 0 .75rem; }
-    .article-body p { margin-bottom: 1.25rem; }
-    .article-body a { color: var(--bordeaux); }
-    .article-body .table-wrap { overflow-x: auto; margin: 1.5rem 0; -webkit-overflow-scrolling: touch; }
-    .article-body table { width: 100%; border-collapse: collapse; font-size: .95rem; line-height: 1.5; }
-    .article-body th { background: var(--navy); color: #fff; text-align: left; font-weight: 600; padding: .6rem .8rem; }
-    .article-body td { padding: .55rem .8rem; border-bottom: 1px solid #e3d8cc; vertical-align: top; }
-    .article-body tbody tr:nth-child(even) td { background: var(--nude-card); }
-    .debate-section { background: var(--nude-card); border-radius: 12px; padding: 1.5rem 2rem; margin: 3rem 0; }
-    .debate-section h3 { font-family: var(--font-display); color: var(--navy); font-size: 1.1rem; margin-bottom: 1.5rem; }
-    .debate-question { margin-bottom: 1.5rem; }
-    .debate-question p { font-weight: 600; color: var(--navy); margin-bottom: .75rem; }
-    .debate-options { display: flex; flex-wrap: wrap; gap: .5rem; }
-    .debate-btn { background: white; border: 1.5px solid var(--bordeaux); color: var(--bordeaux); padding: .4rem 1rem; border-radius: 20px; cursor: pointer; font-size: .9rem; transition: all .2s; }
-    .debate-btn:hover, .debate-btn.selected { background: var(--bordeaux); color: white; }
-    .back-link { display: inline-flex; align-items: center; gap: .5rem; color: var(--secondary); font-size: .9rem; margin: 2rem 0 0; text-decoration: none; }
-    .back-link:hover { color: var(--navy); }
-  </style>
 </head>
 <body>
 
@@ -45,13 +24,15 @@
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="/">Accueil</a>
       <a href="/#articles">Articles</a>
-      <a href="/mentions-legales.html">Mentions légales</a>
+      <a href="/mentions-legales.html" class="nav-legal">Mentions légales</a>
+      <a href="https://www.instagram.com/charleslemedia/" class="nav-social" target="_blank" rel="noopener" aria-label="Instagram de Charles le Média"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
     </nav>
   </div>
+  <div class="read-progress" id="read-progress" aria-hidden="true"></div>
 </header>
 
 <main class="article-full" id="article-content">
-  <p style="color:var(--secondary);font-family:var(--font-body);padding:2rem 0;">Chargement de l'article…</p>
+  <p class="empty-filter" role="status">Chargement de l'article…</p>
 </main>
 
 <footer class="site-footer">
@@ -59,6 +40,10 @@
     <div class="footer-logo-charles">Charles</div>
     <div class="footer-logo-media">Le Média</div>
     <p class="footer-tagline">Réflexions personnelles sur le monde</p>
+    <div class="footer-contact">
+      <a href="https://www.instagram.com/charleslemedia/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>@charleslemedia</span></a>
+      <a href="mailto:charleslemedia@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>charleslemedia@gmail.com</span></a>
+    </div>
     <div class="footer-links">
       <a href="/">Accueil</a>
       <a href="/#articles">Articles</a>
@@ -68,7 +53,7 @@
       Ce site est un espace d'expression personnelle. Son auteur n'est pas journaliste professionnel
       et ne prétend pas à ce titre. Les contenus publiés reflètent des recherches et opinions personnelles.
     </p>
-    <p style="color:rgba(255,255,255,.3);font-size:.7rem;">© 2026 Charles le média — Hébergé sur Netlify</p>
+    <p class="footer-copy">© 2026 Charles le média — Hébergé sur Netlify</p>
   </div>
 </footer>
 
@@ -130,52 +115,137 @@ function formatDate(dateStr) {
   } catch(e) { return dateStr; }
 }
 
+// Échappement du texte inséré dans le HTML
+const h = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 function buildDebate(meta) {
   let html = '';
-  ['debate1', 'debate2'].forEach((key, i) => {
+  ['debate1', 'debate2'].forEach(key => {
     const q = meta[`${key}_question`] || meta[`${key}.question`];
     const opts = (meta[`${key}_options`] || meta[`${key}.options`] || 'Oui;Non;Ça dépend').split(';');
     if (!q) return;
-    html += `<div class="debate-question">
-      <p>${q}</p>
-      <div class="debate-options">
-        ${opts.map(o => `<button class="debate-btn" onclick="this.classList.toggle('selected')">${o.trim()}</button>`).join('')}
+    html += `<div class="debate-block">
+      <p>${h(q)}</p>
+      <div class="debate-options" role="group">
+        ${opts.map(o => `<button type="button" class="debate-btn" aria-pressed="false">${h(o.trim())}</button>`).join('')}
       </div>
     </div>`;
   });
-  return html ? `<div class="debate-section"><h3>💬 Questions de débat</h3>${html}</div>` : '';
+  return html ? `<section class="debate-section" aria-label="Questions de débat"><h3>Et vous, qu'en pensez-vous ?</h3>${html}</section>` : '';
 }
 
 function renderBody(md) {
   if (!window.marked) return md;
   const html = marked.parse(md);
-  // Images insérées dans le texte : les lire aussi sur GitHub
   return html
-    .replace(/<img src="(?!https?:)([^"]+)"/g, (m, src) => `<img src="${imgUrl(src)}"`)
+    // Images insérées dans le texte : les lire aussi sur GitHub
+    .replace(/<img src="(?!https?:)([^"]+)"/g, (m, src) => `<img loading="lazy" decoding="async" src="${imgUrl(src)}"`)
     // Tableaux : défilement horizontal sur téléphone
     .replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>')
     // Liens vers d'autres sites : ouverture dans un nouvel onglet
     .replace(/<a href="(https?:\/\/[^"]+)"/g, '<a href="$1" target="_blank" rel="noopener"');
 }
 
+// Sommaire : construit à partir des intertitres (à partir de 3)
+function buildToc(body) {
+  const heads = [...body.querySelectorAll('h2')];
+  if (heads.length < 3) return null;
+  const used = new Set();
+  const items = heads.map((el, i) => {
+    let id = (el.textContent || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || `partie-${i + 1}`;
+    while (used.has(id)) id += '-2';
+    used.add(id);
+    el.id = id;
+    return `<li><a href="#${id}">${h(el.textContent)}</a></li>`;
+  });
+  const toc = document.createElement('details');
+  toc.className = 'toc';
+  if (window.matchMedia('(min-width: 900px)').matches) toc.open = true;
+  toc.innerHTML = `<summary>Sommaire · ${heads.length} parties</summary><ol>${items.join('')}</ol>`;
+  return toc;
+}
+
+// Liste des articles (pour la navigation dans une série)
+async function loadIndex() {
+  try {
+    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/index.json?v=${Math.floor(Date.now() / 60000)}`);
+    return r.ok ? await r.json() : [];
+  } catch (e) { return []; }
+}
+
+function buildSeriesNav(meta, slug, index) {
+  if (!meta.series) return '';
+  const list = index.filter(a => a.series === meta.series)
+    .sort((x, y) => (+x.series_part || 0) - (+y.series_part || 0));
+  if (list.length < 2) return '';
+  const pos = list.findIndex(a => a.slug === slug);
+  const prev = list[pos - 1], next = list[pos + 1];
+  const link = (a, dir, cls) => a ? `<a class="${cls}" href="/articles/${encodeURI(a.slug)}"><span class="dir">${dir}</span><span class="t">${h(a.title)}</span></a>` : '';
+  return `
+    <nav class="series-nav" aria-label="Série ${h(meta.series)}">
+      <div class="series-band">
+        <div class="series-head">
+          <span class="kicker">Série · volet ${h(meta.series_part || pos + 1)} sur ${list.length}</span>
+          <h2>${h(meta.series)}</h2>
+        </div>
+        <ol class="series-list">
+          ${list.map(a => `
+            <li class="series-item"${a.slug === slug ? ' aria-current="true"' : ''}>
+              <a href="/articles/${encodeURI(a.slug)}">
+                <span class="series-num">Volet ${h(a.series_part || '')}</span>
+                <span class="series-title">${h(a.title)}</span>
+                <span class="series-time">${a.readtime ? h(a.readtime) + ' min' : ''}</span>
+              </a>
+            </li>`).join('')}
+        </ol>
+        ${prev || next ? `<div class="series-pager">${link(prev, '← Volet précédent', 'prev')}${link(next, 'Volet suivant →', 'next')}</div>` : ''}
+      </div>
+    </nav>`;
+}
+
+const FOLLOW = `
+  <aside class="follow-box">
+    <p><strong>Cet article vous a intéressé ?</strong>Les prochains articles et les infographies sont annoncés sur Instagram.</p>
+    <a href="https://www.instagram.com/charleslemedia/" class="btn btn-primary" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Suivre @charleslemedia</a>
+  </aside>`;
+
+// Barre de progression : suit le défilement du texte de l'article
+function initProgress() {
+  const bar = document.getElementById('read-progress');
+  const body = document.querySelector('.article-body');
+  if (!bar || !body) return;
+  let ticking = false;
+  const update = () => {
+    const r = body.getBoundingClientRect();
+    const total = r.height - window.innerHeight * .6;
+    const done = Math.min(1, Math.max(0, (-r.top + window.innerHeight * .25) / Math.max(total, 1)));
+    bar.style.transform = `scaleX(${done})`;
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+}
+
 async function loadArticle() {
   const container = document.getElementById('article-content');
   // Récupère le slug depuis l'URL : /articles/mon-article.html
-  const path = window.location.pathname; // ex: /articles/mon-article.html
-  const slug = path.split('/').pop();
+  const slug = decodeURIComponent(window.location.pathname.split('/').pop());
   if (!slug || slug === 'article.html') {
-    container.innerHTML = '<p>Article introuvable.</p>';
+    container.innerHTML = '<p>Article introuvable. <a href="/">Retour à l\'accueil</a></p>';
     return;
   }
 
   try {
-    const res = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/${slug}`);
+    const [res, index] = await Promise.all([
+      fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/${encodeURIComponent(slug)}`),
+      loadIndex(),
+    ]);
     if (!res.ok) throw new Error('Article non trouvé');
-    const text = await res.text();
-    const { meta, body } = parseFrontmatter(text);
+    const { meta, body } = parseFrontmatter(await res.text());
 
-    document.title = `${meta.title || 'Article'} — Charles le média`;
-    // Pour Google : description et adresse officielle de la page
+    document.title = `${meta.title || 'Article'} — Charles le Média`;
     const setMeta = (sel, make, attr, val) => {
       let el = document.head.querySelector(sel);
       if (!el) { el = make(); document.head.appendChild(el); }
@@ -184,24 +254,36 @@ async function loadArticle() {
     if (meta.description) setMeta('meta[name="description"]', () => Object.assign(document.createElement('meta'), { name: 'description' }), 'content', meta.description);
     setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `${location.origin}/articles/${slug}`);
 
-    const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="${meta.title}">` : '';
-    const readtime = meta.readtime ? `· ${meta.readtime} min de lecture` : '';
+    const cover = meta.cover ? `<img class="cover-img" src="${imgUrl(meta.cover)}" alt="" fetchpriority="high">` : '';
+    const readtime = meta.readtime ? `${meta.readtime} min de lecture` : '';
+    const seriesTag = meta.series ? `<span class="series-tag">Série « ${h(meta.series)} » · volet ${h(meta.series_part || '')}</span>` : '';
 
     container.innerHTML = `
-      <a href="/" class="back-link">← Retour aux articles</a>
-      <br><br>
-      <span class="category-tag">${meta.category || ''}</span>
-      <h1>${meta.title || 'Sans titre'}</h1>
+      <a href="/" class="back-link">← Tous les articles</a>
+      <div><span class="kicker">${h(meta.category || '')}</span>${seriesTag}</div>
+      <h1>${h(meta.title || 'Sans titre')}</h1>
       <div class="article-meta">
-        <span>${formatDate(meta.date)}</span>
-        <span>${readtime}</span>
+        <span>${h(formatDate(meta.date))}</span>
+        <span>${h(readtime)}</span>
       </div>
       ${cover}
       <div class="article-body">${renderBody(body)}</div>
       ${buildDebate(meta)}
+      ${buildSeriesNav(meta, slug, index)}
+      ${FOLLOW}
     `;
+
+    const bodyEl = container.querySelector('.article-body');
+    const toc = buildToc(bodyEl);
+    if (toc) bodyEl.before(toc);
+
+    container.querySelectorAll('.debate-btn').forEach(btn => btn.addEventListener('click', () => {
+      btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    }));
+
+    initProgress();
   } catch(e) {
-    container.innerHTML = '<p>Impossible de charger cet article.</p>';
+    container.innerHTML = '<p>Impossible de charger cet article. Vérifiez votre connexion puis rechargez la page. <a href="/">Retour à l\'accueil</a></p>';
     console.error(e);
   }
 }

@@ -1,15 +1,41 @@
 /* Charles le média — JS principal */
 
-/* ---- Débats ---- */
-function toggleDebate(btn) {
-  btn.closest('.debate-btns').querySelectorAll('.debate-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+/* ---- Filtres par catégorie (appelé par articles.js une fois les cartes chargées) ---- */
+function initFilters() {
+  const buttons = document.querySelectorAll('.tag-btn');
+  const grid = document.getElementById('articles-grid');
+  if (!buttons.length || !grid) return;
 
-/* ---- Filtres par catégorie ---- */
-function setTag(btn) {
-  document.querySelectorAll('.tag').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  const apply = (tag) => {
+    let visible = 0;
+    grid.querySelectorAll('.article-card').forEach(card => {
+      const show = tag === 'all' || card.dataset.tag === tag;
+      card.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    });
+    let empty = grid.querySelector('.empty-filter');
+    if (!visible) {
+      if (!empty) {
+        empty = document.createElement('p');
+        empty.className = 'empty-filter';
+        empty.setAttribute('role', 'status');
+        grid.appendChild(empty);
+      }
+      empty.textContent = 'Pas encore d’article dans cette catégorie.';
+    } else if (empty) {
+      empty.remove();
+    }
+  };
+
+  buttons.forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.dataset.tag === 'all' ? 'true' : 'false');
+    // Retour visuel dès l'appui (pointerdown), action au clic
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      apply(btn.dataset.tag);
+    });
+  });
 }
 
 /* ---- Sécurité : échappement HTML strict ---- */

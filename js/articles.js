@@ -1,40 +1,29 @@
-// Charge les articles depuis GitHub API
+// Page d'accueil : charge la liste des articles, construit « À la une », les séries,
+// les filtres (seulement les catégories qui ont des articles) et la grille.
 const REPO = 'frdfoto20-sys/charles-media';
 const BRANCH = 'main';
+const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
 
 // Les images envoyées depuis l'admin sont lues directement sur GitHub
 function imgUrl(src) {
   if (!src) return '';
   if (/^https?:\/\//.test(src)) return src;
   const name = src.split('/').pop();
-  return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/images/${name}`;
+  return `${RAW}articles/images/${name}`;
 }
 
-const CATEGORY_IMAGES = {
-  'Économie':    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80',
-  'Nature':      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80',
-  'Politique':   'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&q=80',
-  'Technologie': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80',
-  'Société':     'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&q=80',
-  'Science':     'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=600&q=80',
-  'Culture':     'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80',
+const CATEGORY_TAGS = {
+  'Économie': 'economie', 'Nature': 'nature', 'Politique': 'politique', 'Technologie': 'technologie',
+  'Société': 'societe', 'Science': 'science', 'Culture': 'culture',
 };
 
-const CATEGORY_TAGS = {
-  'Économie':    'economie',
-  'Nature':      'nature',
-  'Politique':   'politique',
-  'Technologie': 'technologie',
-  'Société':     'societe',
-  'Science':     'science',
-  'Culture':     'culture',
-};
+// Échappement du texte inséré dans le HTML
+const h = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 function parseFrontmatter(text) {
   const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { meta: {}, body: text };
   const fm = {};
-  // Lecture YAML complète (l'admin coupe les longues lignes sur plusieurs lignes)
   if (window.jsyaml) {
     try {
       const flat = (obj, prefix) => Object.entries(obj || {}).forEach(([k, v]) => {
@@ -46,58 +35,108 @@ function parseFrontmatter(text) {
       return { meta: fm, body: match[2] };
     } catch (e) { console.warn('YAML', e); }
   }
-  let parent = null;
-  match[1].split(/\r?\n/).forEach(line => {
-    const idx = line.indexOf(':');
-    if (idx === -1) return;
-    const indented = /^\s+/.test(line);
-    const key = line.slice(0, idx).trim();
-    const val = line.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
-    if (!indented) {
-      parent = val === '' ? key : null;
-      if (val !== '') fm[key] = val;
-    } else if (parent) {
-      fm[`${parent}.${key}`] = val;
-    } else {
-      fm[key] = val;
-    }
-  });
   return { meta: fm, body: match[2] };
 }
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-  } catch(e) { return dateStr; }
+  const d = new Date(dateStr);
+  return isNaN(d) ? String(dateStr) : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-function buildCard(meta, slug) {
-  const tag = CATEGORY_TAGS[meta.category] || 'other';
-  const img = imgUrl(meta.cover) || CATEGORY_IMAGES[meta.category] || CATEGORY_IMAGES['Culture'];
-  const readtime = meta.readtime ? `· ${meta.readtime} min` : '';
+const articleHref = slug => `/articles/${slug}`;
+const readLabel = (m, long) => m.readtime ? `${m.readtime} min${long ? ' de lecture' : ''}` : '';
+const kicker = m => m.series ? `${m.series} · volet ${m.series_part || ''}` : (m.category || '');
+
+function buildCard({ meta, slug }) {
+  const tag = CATEGORY_TAGS[meta.category] || 'autre';
+  const img = imgUrl(meta.vignette || meta.cover);
   return `
     <article class="article-card" data-tag="${tag}">
-      <img src="${img}" alt="${meta.title || ''}">
+      ${img ? `<div class="card-media"><img src="${h(img)}" alt="" loading="lazy" decoding="async" width="640" height="400"></div>` : ''}
       <div class="card-body">
-        <span class="category-tag">${meta.category || ''}</span>
-        <h3>${meta.title || 'Sans titre'}</h3>
-        <p>${meta.description || ''}</p>
+        <span class="kicker">${h(kicker(meta))}</span>
+        <h3><a href="${articleHref(slug)}" class="card-link">${h(meta.title || 'Sans titre')}</a></h3>
+        <p>${h(meta.description)}</p>
         <div class="article-meta">
-          <span>${formatDate(meta.date)}</span>
-          <span>${readtime}</span>
+          <span>${h(formatDate(meta.date))}</span>
+          <span>${h(readLabel(meta))}</span>
         </div>
-        <a href="/articles/${slug}" class="btn btn-primary" style="margin-top:1rem;display:inline-block;">Lire l'article</a>
       </div>
     </article>`;
+}
+
+function renderFeatured(a) {
+  const section = document.getElementById('featured-section');
+  const card = document.getElementById('featured-card');
+  if (!a || !section || !card) return;
+  const img = imgUrl(a.meta.vignette || a.meta.cover);
+  card.innerHTML = `
+    ${img ? `<div class="featured-media"><img class="featured-img" src="${h(img)}" alt="" fetchpriority="high" width="800" height="600"></div>` : ''}
+    <div class="featured-content">
+      <span class="kicker">${h(kicker(a.meta))}</span>
+      <h2><a href="${articleHref(a.slug)}" class="card-link">${h(a.meta.title || 'Sans titre')}</a></h2>
+      <p>${h(a.meta.description)}</p>
+      <div class="article-meta">
+        <span>${h(formatDate(a.meta.date))}</span>
+        <span>${h(readLabel(a.meta, true))}</span>
+      </div>
+      <span class="btn btn-primary" aria-hidden="true">Lire l'article</span>
+    </div>`;
+  section.hidden = false;
+}
+
+// Une série = au moins deux articles avec le même champ « series »
+function renderSeries(articles) {
+  const section = document.getElementById('series-section');
+  if (!section) return;
+  const groups = {};
+  articles.forEach(a => { if (a.meta.series) (groups[a.meta.series] ||= []).push(a); });
+  const blocks = Object.entries(groups).filter(([, list]) => list.length > 1).map(([name, list]) => {
+    list.sort((x, y) => (+x.meta.series_part || 0) - (+y.meta.series_part || 0));
+    const total = list.reduce((t, a) => t + (+a.meta.readtime || 0), 0);
+    return `
+      <div class="series-band">
+        <div class="series-head">
+          <span class="kicker">Série · ${list.length} volets</span>
+          <h2>${h(name)}</h2>
+          <p>À lire dans l'ordre${total ? `, environ ${total} minutes au total` : ''}.</p>
+        </div>
+        <ol class="series-list">
+          ${list.map(a => `
+            <li class="series-item">
+              <a href="${articleHref(a.slug)}">
+                <span class="series-num">Volet ${h(a.meta.series_part || '')}</span>
+                <span class="series-title">${h(a.meta.title)}</span>
+                <span class="series-time">${h(readLabel(a.meta))}</span>
+              </a>
+            </li>`).join('')}
+        </ol>
+      </div>`;
+  });
+  if (!blocks.length) return;
+  section.innerHTML = blocks.join('');
+  section.hidden = false;
+}
+
+// Filtres : n'affiche que les catégories présentes, et rien du tout s'il n'y en a qu'une
+function renderFilters(articles) {
+  const section = document.getElementById('filters-section');
+  const box = document.getElementById('tag-filters');
+  if (!section || !box) return;
+  const cats = [...new Set(articles.map(a => a.meta.category).filter(Boolean))];
+  if (cats.length < 2) return;
+  box.innerHTML = `<button type="button" class="tag-btn" data-tag="all">Tous</button>` +
+    cats.map(c => `<button type="button" class="tag-btn" data-tag="${CATEGORY_TAGS[c] || 'autre'}">${h(c)}</button>`).join('');
+  section.hidden = false;
+  if (typeof initFilters === 'function') initFilters();
 }
 
 // 1) Liste tenue à jour automatiquement par GitHub (rapide, sans limite)
 async function fromIndex() {
   try {
     const v = Math.floor(Date.now() / 60000);
-    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/articles/index.json?v=${v}`);
+    const r = await fetch(`${RAW}articles/index.json?v=${v}`);
     if (!r.ok) return null;
     const list = await r.json();
     if (!Array.isArray(list)) return null;
@@ -124,51 +163,25 @@ async function fromApi() {
 async function loadArticles() {
   const grid = document.getElementById('articles-grid');
   const loading = document.getElementById('articles-loading');
-
   try {
     const articles = (await fromIndex()) || (await fromApi());
     if (!articles || articles.length === 0) {
       if (loading) loading.textContent = 'Aucun article publié pour le moment.';
       return;
     }
-
-    // Trier par date décroissante
     articles.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
-
     if (loading) loading.remove();
 
-    // Article à la une = le plus récent coché "Mettre à la une", sinon le plus récent
+    // À la une = le plus récent coché « Mettre à la une », sinon le plus récent
     const featured = articles.find(a => a.meta.featured === 'true') || articles[0];
-    const featuredSection = document.getElementById('featured-section');
-    const featuredCard = document.getElementById('featured-card');
-    if (featured && featuredSection && featuredCard) {
-      const fImg = imgUrl(featured.meta.cover) || CATEGORY_IMAGES[featured.meta.category] || CATEGORY_IMAGES['Culture'];
-      const fReadtime = featured.meta.readtime ? `· ${featured.meta.readtime} min de lecture` : '';
-      featuredCard.innerHTML = `
-        <img class="featured-img" src="${fImg}" alt="${featured.meta.title || ''}">
-        <div class="featured-content">
-          <span class="category-tag">${featured.meta.category || ''}</span>
-          <h2>${featured.meta.title || 'Sans titre'}</h2>
-          <p>${featured.meta.description || ''}</p>
-          <div class="article-meta">
-            <span>${formatDate(featured.meta.date)}</span>
-            <span>${fReadtime}</span>
-          </div>
-          <a href="/articles/${featured.slug}" class="btn btn-primary">Lire l'article</a>
-        </div>`;
-      featuredSection.style.display = '';
-    }
+    renderFeatured(featured);
+    renderSeries(articles);
 
-    // Les autres articles dans la grille
-    articles.filter(a => a !== featured).forEach(({ meta, slug }) => {
-      grid.insertAdjacentHTML('beforeend', buildCard(meta, slug));
-    });
-
-    // Réactiver les filtres
-    if (typeof initFilters === 'function') initFilters();
-
+    const rest = articles.filter(a => a !== featured);
+    grid.insertAdjacentHTML('beforeend', rest.map(buildCard).join(''));
+    renderFilters(rest);
   } catch (e) {
-    if (loading) loading.textContent = 'Impossible de charger les articles.';
+    if (loading) loading.textContent = 'Impossible de charger les articles. Vérifiez votre connexion puis rechargez la page.';
     console.error(e);
   }
 }

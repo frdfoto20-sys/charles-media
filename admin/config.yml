@@ -28,6 +28,9 @@ collections:
       - { label: "Durée de lecture (min)", name: "readtime", widget: "number", default: 5 }
       - { label: "Mettre à la une", name: "featured", widget: "boolean", default: false, required: false, hint: "Coche pour afficher cet article en haut de la page d'accueil" }
       - { label: "Image de couverture", name: "cover", widget: "image", required: false }
+      - { label: "Vignette pour l'accueil (image simple, sans texte)", name: "vignette", widget: "image", required: false, hint: "Facultatif. Utilisée sur la page d'accueil à la place de la couverture. Idéal : une photo sans texte." }
+      - { label: "Série (nom)", name: "series", widget: "string", required: false, hint: "Même nom exact pour tous les volets, par ex. « Le prix de nos courses »" }
+      - { label: "Numéro du volet", name: "series_part", widget: "number", required: false, value_type: "int", min: 1 }
       - { label: "Corps de l'article",  name: "body",  widget: "markdown" }
       - label: "Question de débat 1"
         name: "debate1"
