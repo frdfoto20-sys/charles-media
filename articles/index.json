@@ -9,9 +9,9 @@
     "readtime": "20",
     "featured": true,
     "cover": "images/carte_grossistes.jpg",
+    "vignette": "",
     "series": "Le prix de nos courses",
-    "series_part": "2",
-    "vignette": ""
+    "series_part": "2"
   },
   {
     "slug": "le-voyage-de-nos-courses-de-lhexagone-a-la-martinique.html",
@@ -23,9 +23,9 @@
     "readtime": "15",
     "featured": true,
     "cover": "images/couverture-15-etapes-usine-rayon.jpg",
+    "vignette": "",
     "series": "Le prix de nos courses",
-    "series_part": "1",
-    "vignette": ""
+    "series_part": "1"
   },
   {
     "slug": "la-martinique-rapporte-t-elle-de-largent-a-la-france-hexagonale.html",
@@ -37,8 +37,8 @@
     "readtime": "7",
     "featured": true,
     "cover": "images/couverture-femme-couchee-titre.jpg",
+    "vignette": "",
     "series": "",
-    "series_part": "",
-    "vignette": ""
+    "series_part": ""
   }
 ]
