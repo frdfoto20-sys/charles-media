@@ -1,0 +1,65 @@
+// Aperçu des articles dans l'admin, avec la mise en page du site.
+    // Aperçu de l'article dans l'admin, avec la mise en page du site
+    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+    CMS.registerPreviewStyle('/css/style.css');
+    CMS.registerPreviewStyle('/admin/preview.css');
+
+    function formatDate(v) {
+      if (!v) return '';
+      var d = v instanceof Date ? v : new Date(v);
+      return isNaN(d) ? String(v) : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    var ArticlePreview = createClass({
+      render: function () {
+        var entry = this.props.entry;
+        var get = function (k) { return entry.getIn(['data'].concat(k.split('.'))); };
+        var cover = get('cover');
+        var coverAsset = cover ? this.props.getAsset(cover) : null;
+        var readtime = get('readtime');
+        var series = get('series');
+        var part = get('series_part');
+
+        // Chiffres clés (liste de valeur + libellé)
+        var chiffres = (get('chiffres') || []);
+        chiffres = chiffres.toJS ? chiffres.toJS() : chiffres;
+        chiffres = (chiffres || []).filter(function (c) { return c && c.valeur; });
+        var keyFigures = chiffres.length ? h('aside', { className: 'key-figures' },
+          h('span', { className: 'kicker' }, 'L’essentiel en chiffres'),
+          h('dl', {}, chiffres.map(function (c, i) {
+            return h('div', { key: i }, h('dt', {}, c.libelle || ''), h('dd', {}, c.valeur));
+          }))) : null;
+
+        // Questions de débat
+        var debates = ['debate1', 'debate2'].map(function (k) {
+          var q = get(k + '.question');
+          if (!q) return null;
+          var opts = String(get(k + '.options') || '').split(';').filter(function (o) { return o.trim(); });
+          return h('div', { className: 'debate-block', key: k },
+            h('p', {}, q),
+            h('div', { className: 'debate-options' }, opts.map(function (o, i) {
+              return h('span', { className: 'debate-btn', key: i }, o.trim());
+            })));
+        }).filter(Boolean);
+
+        return h('div', { className: 'article-full' },
+          h('div', { className: 'preview-note' }, 'Aperçu : voici à quoi ressemblera l’article sur le site.'),
+          h('div', {},
+            h('span', { className: 'kicker' }, get('category') || ''),
+            series ? h('span', { className: 'series-tag' }, 'Série « ' + series + ' » · volet ' + (part || '?')) : null),
+          h('h1', {}, get('title') || 'Sans titre'),
+          get('description') ? h('p', { className: 'standfirst' }, get('description')) : null,
+          h('div', { className: 'article-meta' },
+            h('span', {}, formatDate(get('date'))),
+            h('span', {}, readtime ? readtime + ' min de lecture' : '')),
+          h('div', { className: 'share-bar share-bar--top preview-muted', title: 'Boutons de partage (actifs sur le site)' },
+            ['WhatsApp', 'Facebook', 'Lien'].map(function (t) { return h('span', { className: 'share-btn', key: t }, t[0]); })),
+          coverAsset ? h('img', { className: 'cover-img', src: coverAsset.toString(), alt: '' }) : null,
+          keyFigures,
+          h('div', { className: 'article-body' }, this.props.widgetFor('body')),
+          debates.length ? h('section', { className: 'debate-section' }, h('h3', {}, 'Et vous, qu’en pensez-vous ?'), debates) : null,
+          series ? h('div', { className: 'preview-note' }, 'Sur le site, la liste des volets de la série « ' + series + ' » s’affichera ici.') : null
+        );
+      }
+    });
+    CMS.registerPreviewTemplate('articles', ArticlePreview);

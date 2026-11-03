@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="/js/auth-redirect.js"></script>
 </head>
 <body>
 
@@ -117,22 +117,7 @@
 
 <script src="/js/social.js"></script>
 <script src="/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+<script src="/js/vendor/js-yaml-4.1.0.min.js"></script>
 <script src="/js/articles.js"></script>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          // Rediriger vers /admin/ seulement si on vient d'une invitation
-          const hash = window.location.hash;
-          if (hash && hash.includes('invite_token')) {
-            document.location.href = "/admin/";
-          }
-        });
-      }
-    });
-  }
-</script>
 </body>
 </html>
