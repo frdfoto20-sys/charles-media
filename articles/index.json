@@ -1,5 +1,19 @@
 [
   {
+    "slug": "une-marge-à-chaque-étape-dans-la-même-poche.html",
+    "title": "Une marge à chaque étape, dans la même poche ?",
+    "category": "Économie",
+    "description": "Troisième et dernier volet de notre série sur le prix de nos courses en Martinique. Quand un même groupe importe, stocke et vend, où va l'argent de notre paquet de pâtes ?",
+    "date": "09 November 2026",
+    "isoDate": "2026-11-09",
+    "readtime": "18",
+    "featured": true,
+    "cover": "images/cover3.jpg",
+    "vignette": "images/cover3.jpg",
+    "series": "Le prix de nos courses",
+    "series_part": "3"
+  },
+  {
     "slug": "centrales-dachat-et-grossistes-importateurs-qui-achète-ce-quon-trouve-en-rayon.html",
     "title": "Centrales d'achat et grossistes importateurs : Qui achète ce qu'on trouve en rayon ?",
     "category": "Économie",
