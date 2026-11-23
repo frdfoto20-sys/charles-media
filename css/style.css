@@ -532,6 +532,15 @@ p { margin-bottom: 1rem; text-wrap: pretty; }
   margin-bottom: 2rem;
   background: var(--surface);
 }
+.article-full .cover { margin: 0 0 2rem; }
+.article-full .cover .cover-img { margin-bottom: .5rem; }
+.cover-credit {
+  font-family: var(--font-ui);
+  font-size: .75rem;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: right;
+}
 
 .back-link {
   display: inline-flex;

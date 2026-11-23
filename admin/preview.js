@@ -1,6 +1,6 @@
 // Aperçu des articles dans l'admin, avec la mise en page du site.
     // Aperçu de l'article dans l'admin, avec la mise en page du site
-    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+    CMS.registerPreviewStyle('/css/fonts.css');
     CMS.registerPreviewStyle('/css/style.css');
     CMS.registerPreviewStyle('/admin/preview.css');
 
@@ -54,7 +54,11 @@
             h('span', {}, readtime ? readtime + ' min de lecture' : '')),
           h('div', { className: 'share-bar share-bar--top preview-muted', title: 'Boutons de partage (actifs sur le site)' },
             ['WhatsApp', 'Facebook', 'Lien'].map(function (t) { return h('span', { className: 'share-btn', key: t }, t[0]); })),
-          coverAsset ? h('img', { className: 'cover-img', src: coverAsset.toString(), alt: '' }) : null,
+          coverAsset ? (get('credit')
+            ? h('figure', { className: 'cover' },
+                h('img', { className: 'cover-img', src: coverAsset.toString(), alt: '' }),
+                h('figcaption', { className: 'cover-credit' }, 'Image : ' + get('credit')))
+            : h('img', { className: 'cover-img', src: coverAsset.toString(), alt: '' })) : null,
           keyFigures,
           h('div', { className: 'article-body' }, this.props.widgetFor('body')),
           debates.length ? h('section', { className: 'debate-section' }, h('h3', {}, 'Et vous, qu’en pensez-vous ?'), debates) : null,

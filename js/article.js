@@ -291,7 +291,11 @@ async function loadArticle() {
     if (meta.description) setMeta('meta[name="description"]', () => Object.assign(document.createElement('meta'), { name: 'description' }), 'content', meta.description);
     setMeta('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', `${location.origin}/articles/${slug}`);
 
-    const cover = meta.cover ? `<img class="cover-img" src="${h(imgUrl(meta.cover))}" alt="" fetchpriority="high">` : '';
+    const coverImg = meta.cover ? `<img class="cover-img" src="${h(imgUrl(meta.cover))}" alt="" fetchpriority="high">` : '';
+    // Crédit facultatif de l'image de couverture (champ « Crédit de l'image » de l'admin)
+    const cover = coverImg && meta.credit
+      ? `<figure class="cover">${coverImg}<figcaption class="cover-credit">Image : ${h(meta.credit)}</figcaption></figure>`
+      : coverImg;
     const readtime = meta.readtime ? `${meta.readtime} min de lecture` : '';
     const seriesTag = meta.series ? `<span class="series-tag">Série « ${h(meta.series)} » · volet ${h(meta.series_part || '')}</span>` : '';
 

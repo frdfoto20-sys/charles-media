@@ -23,32 +23,38 @@
 [[headers]]
   for = "/"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://identity.netlify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://identity.netlify.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/index.html"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://identity.netlify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://identity.netlify.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/article.html"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/articles/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/mentions-legales.html"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/404.html"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://raw.githubusercontent.com https://api.github.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+
+# Polices hébergées sur le site : fichiers qui ne changent jamais, gardés en cache un an
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 # Anciennes adresses : renvoi permanent (301) vers charleslemedia.com
 [[redirects]]

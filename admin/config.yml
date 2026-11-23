@@ -29,6 +29,7 @@ collections:
       - { label: "Mettre à la une", name: "featured", widget: "boolean", default: false, required: false, hint: "Coche pour afficher cet article en haut de la page d'accueil" }
       - { label: "Image de couverture", name: "cover", widget: "image", required: false }
       - { label: "Vignette pour l'accueil (image simple, sans texte)", name: "vignette", widget: "image", required: false, hint: "Facultatif. Utilisée sur la page d'accueil à la place de la couverture. Idéal : une photo sans texte." }
+      - { label: "Crédit de l'image de couverture", name: "credit", widget: "string", required: false, hint: "Facultatif. À remplir si l'image n'est pas de vous, par ex. « Unsplash, Prénom Nom » ou « image générée par IA ». S'affiche sous l'image." }
       - { label: "Série (nom)", name: "series", widget: "string", required: false, hint: "Même nom exact pour tous les volets, par ex. « Le prix de nos courses »" }
       - { label: "Numéro du volet", name: "series_part", widget: "number", required: false, value_type: "int", min: 1 }
       - label: "Chiffres clés (encadré en haut de l'article)"
